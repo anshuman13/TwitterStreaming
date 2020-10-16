@@ -1,0 +1,22 @@
+<div class="card mb-3 tweetcard rounded">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ tweet.profile_image_url }}" class="card-img" alt="..." width="250" height="250">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <p class="card-text">{{ tweet.text }}</p>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class=" col-md-7">
+            <p class="fa fa-twitter card-text"><small class="text">{{ tweet.name }}</small></p>
+          </div>
+          <div class=" col-md-5">
+            <p class="card-text"><small class="text-muted">{{ tweet.created_at | date: 'dd/MM/yyyy' }}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

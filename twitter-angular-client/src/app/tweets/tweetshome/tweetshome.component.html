@@ -1,0 +1,25 @@
+<div class="container main">
+  <div class="row">
+    <h1 class="ui-header col-md-8">
+      <div class="content">
+      <img class="ui image" src="/assets/twitter-logo.png" width="100" height="100" alt="Twitter Logo">
+          Real Time Tweet Streamer
+      </div>
+      <!-- <button class="btn btn-primary col-md-2 pause-button" (click)="sendMessage()">{{ action }}</button> -->
+    </h1>
+  </div>
+
+  <div class="card">
+    <div class="card-header header">
+      TimeLine
+      <i class="fa fa-pause pause-icon" (click)="sendMessage()"></i>
+    </div>
+    <div *ngFor="let tweet of tweets;" class="row justify-content-md-center">
+      <app-tweetcard [tweet]="tweet"></app-tweetcard>
+    </div>
+    <div class="no-tweets" *ngIf="tweets.length==0">
+      <span>No Tweets Avaialble</span>
+    </div>
+    <a href="#" class="card-link"></a>
+  </div>
+</div>

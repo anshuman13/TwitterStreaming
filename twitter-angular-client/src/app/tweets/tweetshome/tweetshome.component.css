@@ -1,0 +1,17 @@
+.main {
+    margin-top: 1em;
+    width: 100%;
+}
+
+.no-tweets{
+    width: 100%;
+    text-align: center;
+}
+
+.pause-icon{
+    float: right;
+}
+
+.header {
+    margin-bottom: .5em;
+}
