@@ -1,0 +1,29 @@
+{
+  "name": "NodeTwitterStream",
+  "version": "1.0.0",
+  "description": "App to stream tweets and show trends",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "Twitter",
+    "Node.js",
+    "Twitter Streaming API"
+  ],
+  "author": "Anshuman Pradhan",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "got": "^11.7.0",
+    "http": "^0.0.1-security",
+    "needle": "^2.5.2",
+    "nodemon": "^2.0.4",
+    "oauth-1.0a": "^2.2.6",
+    "socket.io": "^2.3.0",
+    "request": "^2.88.2"
+  }
+}
