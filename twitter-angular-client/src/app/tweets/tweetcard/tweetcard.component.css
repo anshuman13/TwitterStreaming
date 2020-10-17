@@ -5,7 +5,12 @@
 
 @media only screen and (max-width: 600px) {
     .tweetcard {
-        width: auto; 
+        width: 400px; 
+        height: auto;
+    }
+
+    .image {
+        width: 100px;
         height: auto;
     }
 }

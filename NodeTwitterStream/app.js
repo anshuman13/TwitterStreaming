@@ -1,3 +1,5 @@
+// Imports
+
 require('dotenv').config()
 
 const express = require('express');
@@ -15,13 +17,15 @@ app.use(cors({credentials: true, origin: 'http://localhost:4200'}));
 
 app.use('/trends', trend);
 
+// Error Handler
 app.use(function serverErrorHandler(err, req, res, next){
   res.status(500).json({
     error: err
   });
 });
 
-//app.listen(port, () => console.log(`Twitter Server app listening on port ${port}!`))
+// Trying to fix the socket timeout issue.
+process.env.UV_THREADPOOL_SIZE = 128;
 
 // Sockets
 const socketIo = require("socket.io");
@@ -36,7 +40,7 @@ const token = process.env.BEARER_TOKEN;
 const streamURL = 'https://api.twitter.com/2/tweets/sample/stream?expansions=author_id&user.fields=profile_image_url&tweet.fields=created_at';
 let timeout = 0;
 
-
+// Create Server
 const server = http.createServer(app);
 const io = socketIo(server);
 server.listen(port, () => console.log(`Listening on port ${port}`));
@@ -58,6 +62,13 @@ const sleep = async (delay) => {
     return new Promise((resolve) => setTimeout(() => resolve(true), delay));
 };
   
+// Main Method to stream Tweets, take two parameters (socket and token)
+
+// Supported socket methods
+// Pause and Resume Stream
+// Emit tweet data to the socket
+// Reconnect on connection Faliure
+
 const streamTweets = (socket, token) => {
   
     const config = {
@@ -69,6 +80,7 @@ const streamTweets = (socket, token) => {
     };
     try {
       let stream = request.get(config);
+      // Tweet data processing and emit
       stream
         .on("data", (data) => {
           try {
@@ -97,17 +109,31 @@ const streamTweets = (socket, token) => {
           socket.emit("error", errorMessage);
           reconnect(stream, socket, token);
         });
+
+      // Pause and Resume 
+      
       socket.on("message", message => {
-          console.log(message)
           if (message === "1") {
             console.log("Pausing Stream");
-            stream.pause();
+            // Pausing the stream throws an error soon after the socket is full of messages.
+            // stream.pause();
+            stream.abort();
           }
           if (message === "0") {
-            stream.resume();
+            console.log("Resuming Stream");
+
+            // Resuming the stream works as expected if the Socket Time out error is not thrown.
+            // Request Library has been deprecated since, Feb 2020.
+            // Migrate to needle/got. Evaluation pending.
+            //stream.resume();
+
+            // Creating new stream
+            streamTweets(socket, token);
           }
         });
       
+      // Disconnect and cleanup
+
       socket.on('disconnect', function(){
           console.log('user disconnected');
           socket.disconnect();
@@ -119,6 +145,7 @@ const streamTweets = (socket, token) => {
     }
   };
   
+// Reconnect Method for stream
 const reconnect = async (stream, socket, token) => {
     timeout++;
     stream.abort();
@@ -126,6 +153,7 @@ const reconnect = async (stream, socket, token) => {
     streamTweets(socket, token);
   };
   
+// Creation of socket connection
 io.on("connection", async (socket) => {
   try {
       console.log("Client connected.");

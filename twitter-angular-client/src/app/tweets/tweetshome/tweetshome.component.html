@@ -14,7 +14,7 @@
       TimeLine
       <i class="fa fa-pause pause-icon" (click)="sendMessage()"></i>
     </div>
-    <div *ngFor="let tweet of tweets;" class="row justify-content-md-center">
+    <div *ngFor="let tweet of tweets;" class="row justify-content-md-center justify-content-sm-center">
       <app-tweetcard [tweet]="tweet"></app-tweetcard>
     </div>
     <div class="no-tweets" *ngIf="tweets.length==0">

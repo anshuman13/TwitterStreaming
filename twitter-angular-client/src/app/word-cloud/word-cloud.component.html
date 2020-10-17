@@ -1,0 +1,6 @@
+<div class="home">
+    <app-d3-cloud [wordData]="trends"></app-d3-cloud>
+    <div *ngIf="isError" class="error">
+        Data Fetching Failed.
+    </div>
+</div>

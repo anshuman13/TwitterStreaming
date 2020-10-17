@@ -1,0 +1,10 @@
+.home {
+    height: 700px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.error {
+    text-align: center;
+    margin-top: 3em;
+}
